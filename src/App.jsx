@@ -15,7 +15,7 @@ function App() {
             {/* routes here*/}
             <Routes>
                 <Route path="/" element={<AccommodationList />} />
-                <Route path="/products/:id" element={<AccommodationsDetails />} />
+                <Route path="/accommodations/:id" element={<AccommodationsDetails />} />
             </Routes>
         </>
     );
