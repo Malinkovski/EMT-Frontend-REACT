@@ -9,8 +9,6 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
-import accommodationImg from "../images/hero.png";
-
 export default function AccommodationCard({ accommodation }) {
   const navigate = useNavigate();
 
@@ -19,7 +17,7 @@ export default function AccommodationCard({ accommodation }) {
       <CardMedia
         component="img"
         height="160"
-        image={accommodationImg}
+        image={"https://picsum.photos/200/300"}
         alt={accommodation.name}
       />
 

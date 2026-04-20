@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Typography, Button, CardMedia, Paper } from "@mui/material";
-import accommodationsImage from "../assets/images/hero.png";
 
 const accommodationsData = [
     { id: 1, name: "Hotel Skopje", price: 120, description: "Great hotel in the center." },
@@ -32,7 +31,7 @@ export default function AccommodationsDetails() {
                 <CardMedia
                     component="img"
                     height="300"
-                    image={accommodationsImage}
+                    image={"https://picsum.photos/200/300"}
                     alt={accommodation.name}
                 />
                 <Typography variant="h4" sx={{ mt: 2 }}>{accommodation.name}</Typography>
