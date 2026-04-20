@@ -1,12 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Typography, Button, CardMedia, Paper } from "@mui/material";
-
-const accommodationsData = [
-    { id: 1, name: "Hotel Skopje", price: 120, description: "Great hotel in the center." },
-    { id: 2, name: "Mountain Lodge", price: 80, description: "Fresh air and nature." },
-    { id: 3, name: "City Apartment", price: 95, description: "Modern apartment." },
-    { id: 4, name: "Beach Resort", price: 150, description: "Sunny beach view." },
-];
+import {accommodationsData} from "../dummydata/accommodations.js";
 
 export default function AccommodationsDetails() {
     const { id } = useParams();
@@ -31,7 +25,7 @@ export default function AccommodationsDetails() {
                 <CardMedia
                     component="img"
                     height="300"
-                    image={"https://picsum.photos/200/300"}
+                    image={accommodation.image}
                     alt={accommodation.name}
                 />
                 <Typography variant="h4" sx={{ mt: 2 }}>{accommodation.name}</Typography>

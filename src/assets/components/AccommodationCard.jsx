@@ -17,7 +17,7 @@ export default function AccommodationCard({ accommodation }) {
       <CardMedia
         component="img"
         height="160"
-        image={"https://picsum.photos/200/300"}
+        image={accommodation.image}
         alt={accommodation.name}
       />
 
