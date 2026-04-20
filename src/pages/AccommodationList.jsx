@@ -1,5 +1,5 @@
 import AccommodationCard from "../assets/components/AccommodationCard";
-
+import styles from "../assets/styles/components/accommodationlist.module.css";
 const AccommodationList = () => {
 
     const accommodations = [
@@ -10,7 +10,7 @@ const AccommodationList = () => {
     ];
 
     return (
-        <div style={{ display: "grid", gap: "20px", padding: "20px" }}>
+        <div className={`${styles.accommodationGrid} section`}>
             {accommodations.map((acc) => (
                 <AccommodationCard accommodation={acc} key={acc.id} />
             ))}
