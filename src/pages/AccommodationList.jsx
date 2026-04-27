@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../axios/axios.js";
+import accommodationsRepository from "../repository/accommodationsRepository";
 import AccommodationCard from "../assets/components/AccommodationCard";
 import styles from "../assets/styles/components/accommodationlist.module.css";
 
@@ -8,11 +8,10 @@ const AccommodationList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    //ADD TO REPOSITORY
     useEffect(() => {
         const fetchAccommodations = async () => {
             try {
-                const response = await axiosInstance.get("/accommodations"); // endpoint from your backend
+                const response = await accommodationsRepository.findAll();
                 setAccommodations(response.data);
             } catch (err) {
                 setError("Failed to load accommodations");
@@ -27,8 +26,6 @@ const AccommodationList = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
-
-    console.log(accommodations)
 
     return (
         <div className={`${styles.accommodationGrid} section`}>

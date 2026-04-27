@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axiosInstance from "../axios/axios.js";
+import accommodationsRepository from "../repository/accommodationsRepository";
 import { Container, Typography, Button, CardMedia, Paper } from "@mui/material";
 
 export default function AccommodationsDetails() {
@@ -10,11 +10,10 @@ export default function AccommodationsDetails() {
     const [accommodation, setAccommodation] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    //ADD TO REPOSITORY
     useEffect(() => {
         const fetchAccommodation = async () => {
             try {
-                const res = await axiosInstance.get(`/accommodations/${id}`);
+                const res = await accommodationsRepository.findById(id);
                 setAccommodation(res.data);
             } catch (err) {
                 console.error(err);
