@@ -22,6 +22,14 @@ export default function ReservationList() {
 
     const USER_ID = 1;
 
+    const getPrice = (
+        accommodationId
+    ) => {
+        return (
+            50 + accommodationId * 20
+        );
+    };
+
     const loadData = async () => {
         try {
             const res =
@@ -36,29 +44,44 @@ export default function ReservationList() {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            await loadData();
-        };
+        const fetchData =
+            async () => {
+                await loadData();
+            };
 
         fetchData();
     }, []);
 
-    const handleRemove = async (itemId) => {
-        await reservationsRepository.removeItem(
-            reservationList.id,
-            itemId
-        );
+    const handleRemove =
+        async (itemId) => {
+            await reservationsRepository.removeItem(
+                reservationList.id,
+                itemId
+            );
 
-        loadData();
-    };
+            await loadData();
 
-    const handleReserve = async () => {
-        await reservationsRepository.confirmReservations(
-            reservationList.id
-        );
+            window.dispatchEvent(
+                new Event(
+                    "reservationUpdated"
+                )
+            );
+        };
 
-        loadData();
-    };
+    const handleReserve =
+        async () => {
+            await reservationsRepository.confirmReservations(
+                reservationList.id
+            );
+
+            await loadData();
+
+            window.dispatchEvent(
+                new Event(
+                    "reservationUpdated"
+                )
+            );
+        };
 
     if (!reservationList) {
         return (
@@ -79,9 +102,11 @@ export default function ReservationList() {
                 Reservation List
             </Typography>
 
-            {reservationList.items.length === 0 ? (
+            {reservationList.items
+                .length === 0 ? (
                 <Typography>
-                    No reservations added.
+                    No reservations
+                    added.
                 </Typography>
             ) : (
                 <Paper sx={{ p: 2 }}>
@@ -105,6 +130,14 @@ export default function ReservationList() {
                                 </TableCell>
 
                                 <TableCell>
+                                    Price
+                                </TableCell>
+
+                                <TableCell>
+                                    Total
+                                </TableCell>
+
+                                <TableCell>
                                     Actions
                                 </TableCell>
                             </TableRow>
@@ -112,9 +145,13 @@ export default function ReservationList() {
 
                         <TableBody>
                             {reservationList.items.map(
-                                (item) => (
+                                (
+                                    item
+                                ) => (
                                     <TableRow
-                                        key={item.id}
+                                        key={
+                                            item.id
+                                        }
                                     >
                                         <TableCell>
                                             {
@@ -150,6 +187,25 @@ export default function ReservationList() {
                                         </TableCell>
 
                                         <TableCell>
+                                            $
+                                            {getPrice(
+                                                item
+                                                    .accommodation
+                                                    .id
+                                            )}
+                                        </TableCell>
+
+                                        <TableCell>
+                                            $
+                                            {getPrice(
+                                                item
+                                                    .accommodation
+                                                    .id
+                                            ) *
+                                                item.num_nights}
+                                        </TableCell>
+
+                                        <TableCell>
                                             <Button
                                                 variant="contained"
                                                 color="error"
@@ -171,7 +227,8 @@ export default function ReservationList() {
                     <Box
                         sx={{
                             mt: 3,
-                            display: "flex",
+                            display:
+                                "flex",
                             gap: 2
                         }}
                     >

@@ -23,24 +23,35 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import accommodationsRepository from "../../repository/accommodationsRepository";
+import accommodationsRepository
+    from "../../repository/accommodationsRepository";
 
 export default function AccommodationsCarousel() {
-    const [items, setItems] = useState([]);
+    const [items, setItems] =
+        useState([]);
 
-    const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
     useEffect(() => {
-        const fetch = async () => {
-            try {
-                const res =
-                    await accommodationsRepository.findAll();
+        const fetch =
+            async () => {
+                try {
+                    const res =
+                        await accommodationsRepository.findAll();
 
-                setItems(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        };
+                    setItems(
+                        res.data.slice(
+                            0,
+                            9
+                        )
+                    );
+                } catch (err) {
+                    console.error(
+                        err
+                    );
+                }
+            };
 
         fetch();
     }, []);
@@ -50,13 +61,15 @@ export default function AccommodationsCarousel() {
             sx={{
                 py: 6,
                 display: "flex",
-                justifyContent: "center"
+                justifyContent:
+                    "center"
             }}
         >
             <Box
                 sx={{
                     width: "100%",
-                    maxWidth: "1200px",
+                    maxWidth:
+                        "1200px",
                     px: 2
                 }}
             >
@@ -67,13 +80,20 @@ export default function AccommodationsCarousel() {
                         Autoplay
                     ]}
                     navigation
-                    pagination={{ clickable: true }}
-                    autoplay={true}
-                    loop={items.length > 5}
+                    pagination={{
+                        clickable: true
+                    }}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false
+                    }}
+                    loop={
+                        items.length > 5
+                    }
                     spaceBetween={20}
                     slidesPerView={1}
                     breakpoints={{
-                                                540: {
+                        540: {
                             slidesPerView: 1
                         },
                         840: {
@@ -84,54 +104,79 @@ export default function AccommodationsCarousel() {
                         }
                     }}
                 >
-                    {items.map((item) => (
-                        <SwiperSlide key={item.id}>
-                            <Card
-                                sx={{
-                                    borderRadius: 3,
-                                    overflow: "hidden",
-                                    height: "100%"
-                                }}
+                    {items.map(
+                        (item) => (
+                            <SwiperSlide
+                                key={
+                                    item.id
+                                }
                             >
-                                <CardMedia
-                                    component="img"
-                                    height="220"
-                                    image={`https://picsum.photos/id/${item.id + 10}/600/400`}
-                                    alt={item.name}
-                                />
-
-                                <CardContent>
-                                    <Typography
-                                        variant="h6"
-                                        gutterBottom
-                                    >
-                                        {item.name}
-                                    </Typography>
-
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                    >
-                                        {item.category} •{" "}
-                                        {item.numRooms} rooms
-                                    </Typography>
-
-                                    <Button
-                                        variant="contained"
-                                        size="small"
-                                        sx={{ mt: 2 }}
-                                        onClick={() =>
-                                            navigate(
-                                                `/accommodations/${item.id}`
-                                            )
+                                <Card
+                                    sx={{
+                                        borderRadius: 3,
+                                        overflow:
+                                            "hidden",
+                                        height:
+                                            "100%",
+                                        boxShadow: 3
+                                    }}
+                                >
+                                    <CardMedia
+                                        component="img"
+                                        height="220"
+                                        image={`https://picsum.photos/id/${
+                                            item.id +
+                                            10
+                                        }/600/400`}
+                                        alt={
+                                            item.name
                                         }
-                                    >
-                                        View Details
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        </SwiperSlide>
-                    ))}
+                                    />
+
+                                    <CardContent>
+                                        <Typography
+                                            variant="h6"
+                                            gutterBottom
+                                        >
+                                            {
+                                                item.name
+                                            }
+                                        </Typography>
+
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                        >
+                                            {
+                                                item.category
+                                            }{" "}
+                                            •{" "}
+                                            {
+                                                item.numRooms
+                                            }{" "}
+                                            rooms
+                                        </Typography>
+
+                                        <Button
+                                            variant="contained"
+                                            size="small"
+                                            sx={{
+                                                mt: 2
+                                            }}
+                                            onClick={() =>
+                                                navigate(
+                                                    `/accommodations/${item.id}`
+                                                )
+                                            }
+                                        >
+                                            View
+                                            Details
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </SwiperSlide>
+                        )
+                    )}
                 </Swiper>
             </Box>
         </Box>
