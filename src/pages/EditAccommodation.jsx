@@ -8,6 +8,7 @@ import {
     Typography,
     Box
 } from "@mui/material";
+import { FormControlLabel, Checkbox } from "@mui/material";
 import accommodationsRepository from "../repository/accommodationsRepository";
 
 export default function AccommodationEdit() {
@@ -26,9 +27,13 @@ export default function AccommodationEdit() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
         setForm((prev) => ({
             ...prev,
-            [name]: value
+            [name]:
+                name === "numRooms"
+                    ? Number(value)
+                    : value
         }));
     };
 
@@ -46,7 +51,15 @@ export default function AccommodationEdit() {
                 Edit Accommodation
             </Typography>
 
-            <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2
+                }}
+            >
                 <TextField
                     label="Name"
                     name="name"
@@ -60,6 +73,21 @@ export default function AccommodationEdit() {
                     type="number"
                     value={form.numRooms}
                     onChange={handleChange}
+                />
+
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={form.is_available}
+                            onChange={(e) =>
+                                setForm((prev) => ({
+                                    ...prev,
+                                    is_available: e.target.checked
+                                }))
+                            }
+                        />
+                    }
+                    label="Available"
                 />
 
                 <Button type="submit" variant="contained">

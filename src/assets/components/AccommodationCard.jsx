@@ -10,7 +10,7 @@ export default function AccommodationCard({ accommodation }) {
             <CardMedia
                 component="img"
                 height="160"
-                image={`https://picsum.photos/id/${accommodation.id + 100}/200/300`}
+                image={`https://picsum.photos/id/${accommodation.id + 10}/200/300`}
                 alt={accommodation.name}
             />
 

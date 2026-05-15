@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import {
     Box,
     Typography,
@@ -7,67 +8,132 @@ import {
     CardMedia,
     CardContent
 } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import {
+    Navigation,
+    Pagination,
+    Autoplay
+} from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import accommodationsRepository from "../../repository/accommodationsRepository";
 
 export default function AccommodationsCarousel() {
     const [items, setItems] = useState([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetch = async () => {
-            const res = await accommodationsRepository.findAll();
-            setItems(res.data.slice(0, 5));
+            try {
+                const res =
+                    await accommodationsRepository.findAll();
+
+                setItems(res.data);
+            } catch (err) {
+                console.error(err);
+            }
         };
+
         fetch();
     }, []);
 
     return (
         <Box
             sx={{
+                py: 6,
                 display: "flex",
-                overflowX: "auto",
-                gap: 2,
-                pb: 2,
-                scrollSnapType: "x mandatory",
-                "&::-webkit-scrollbar": { display: "none" }
+                justifyContent: "center"
             }}
         >
-            {items.map((item) => (
-                <Card
-                    key={item.id}
-                    sx={{
-                        minWidth: 360,
-                        flex: "0 0 auto",
-                        scrollSnapAlign: "start",
-                        borderRadius: 2
+            <Box
+                sx={{
+                    width: "100%",
+                    maxWidth: "1200px",
+                    px: 2
+                }}
+            >
+                <Swiper
+                    modules={[
+                        Navigation,
+                        Pagination,
+                        Autoplay
+                    ]}
+                    navigation
+                    pagination={{ clickable: true }}
+                    autoplay={true}
+                    loop={items.length > 5}
+                    spaceBetween={20}
+                    slidesPerView={1}
+                    breakpoints={{
+                                                540: {
+                            slidesPerView: 1
+                        },
+                        840: {
+                            slidesPerView: 2
+                        },
+                        1024: {
+                            slidesPerView: 3
+                        }
                     }}
                 >
-                    <CardMedia
-                        component="img"
-                        height="160"
-                        image={`https://picsum.photos/id/${item.id + 100}/300/200`}
-                    />
+                    {items.map((item) => (
+                        <SwiperSlide key={item.id}>
+                            <Card
+                                sx={{
+                                    borderRadius: 3,
+                                    overflow: "hidden",
+                                    height: "100%"
+                                }}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    height="220"
+                                    image={`https://picsum.photos/id/${item.id + 10}/600/400`}
+                                    alt={item.name}
+                                />
 
-                    <CardContent>
-                        <Typography variant="h6">
-                            {item.name}
-                        </Typography>
+                                <CardContent>
+                                    <Typography
+                                        variant="h6"
+                                        gutterBottom
+                                    >
+                                        {item.name}
+                                    </Typography>
 
-                        <Typography variant="body2" color="text.secondary">
-                            {item.category} • {item.numRooms} rooms
-                        </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                    >
+                                        {item.category} •{" "}
+                                        {item.numRooms} rooms
+                                    </Typography>
 
-                        <Button
-                            size="small"
-                            sx={{ mt: 1 }}
-                            onClick={() => navigate(`/accommodations/${item.id}`)}
-                        >
-                            View Details
-                        </Button>
-                    </CardContent>
-                </Card>
-            ))}
+                                    <Button
+                                        variant="contained"
+                                        size="small"
+                                        sx={{ mt: 2 }}
+                                        onClick={() =>
+                                            navigate(
+                                                `/accommodations/${item.id}`
+                                            )
+                                        }
+                                    >
+                                        View Details
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </Box>
         </Box>
     );
 }

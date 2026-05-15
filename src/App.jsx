@@ -8,6 +8,7 @@ import CountriesPage from "./pages/Countries.jsx";
 import HostsPage from "./pages/Hosts.jsx"
 import AccommodationCreate from "./pages/CreateAccommodation.jsx";
 import AccommodationEdit from "./pages/EditAccommodation.jsx";
+import ReservationList from "./pages/ReservationList.jsx";
 function App() {
     return (
         <>
@@ -26,6 +27,8 @@ function App() {
                 <Route path="/hosts" element={<HostsPage />} />
                 <Route path="/accommodations/create" element={<AccommodationCreate />} />
                 <Route path="/accommodations/edit/:id" element={<AccommodationEdit />} />
+                <Route path="/reservations" element={<ReservationList />}
+                />
             </Routes>
         </>
     );

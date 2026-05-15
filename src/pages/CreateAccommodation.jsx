@@ -6,7 +6,7 @@ import {
     Button,
     MenuItem,
     Typography,
-    Box
+    Box,
 } from "@mui/material";
 import accommodationsRepository from "../repository/accommodationsRepository";
 import hostsRepository from "../repository/hostsRepository";
@@ -26,17 +26,18 @@ export default function AccommodationCreate() {
 
     const [form, setForm] = useState({
         name: "",
-        category: "ROOM",
+        category: "Room",
         host_id: "",
         numRooms: 1,
-        is_available: true
+        is_available: true,
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
         setForm((prev) => ({
             ...prev,
-            [name]: value
+            [name]: name === "host_id" || name === "numRooms" ? Number(value) : value,
         }));
     };
 
@@ -72,12 +73,12 @@ export default function AccommodationCreate() {
                     onChange={handleChange}
                     select
                 >
-                    <MenuItem value="ROOM">Room</MenuItem>
-                    <MenuItem value="HOUSE">House</MenuItem>
-                    <MenuItem value="FLAT">Flat</MenuItem>
-                    <MenuItem value="APARTMENT">Apartment</MenuItem>
-                    <MenuItem value="HOTEL">Hotel</MenuItem>
-                    <MenuItem value="MOTEL">Motel</MenuItem>
+                    <MenuItem value="Room">Room</MenuItem>
+                    <MenuItem value="House">House</MenuItem>
+                    <MenuItem value="Flat">Flat</MenuItem>
+                    <MenuItem value="Apartment">Apartment</MenuItem>
+                    <MenuItem value="Hotel">Hotel</MenuItem>
+                    <MenuItem value="Motel">Motel</MenuItem>
                 </TextField>
 
                 <TextField

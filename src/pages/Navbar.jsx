@@ -16,7 +16,8 @@ const pages = [
     { name: "Accommodations", path: "/accommodations" },
     { name: "Hosts", path: "/hosts" },
     { name: "Countries", path: "/countries" },
-    { name: "Add Accommodation", path: "/accommodations/create" }
+    { name: "Add Accommodation", path: "/accommodations/create" },
+    { name: "Reservations", path: "/reservations" }
 ];
 
 function Navbar() {
